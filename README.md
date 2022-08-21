@@ -212,7 +212,7 @@ The transformation matrix from the forward kinematic, can be used to calculate t
 
 |           | Prismatic             | Revolute                                            |
 |---        |---                    |---                                                  |
-|Linear     | $R^0_{i-1} \cdot M_1$ | $R^0_{i-1} \cdot M_1 \times (D^0_n - D^0_{i-1})$    |
+|Linear     | $R^0_{n-1} \cdot M_1$ | $R^0_{n-1} \cdot M_1 \times (D^0_{n_{max}} - D^0_{n-1})$    |
 |Rotational | $M_0$                 | $M_1$                                               |
 
    
