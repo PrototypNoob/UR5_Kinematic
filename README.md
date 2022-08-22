@@ -132,12 +132,13 @@ To be able to evaluate the Software Solution the Table is transfered to this Doc
 
 The Denavit-Hartenberg Parameters can be used to calculate the forward kinematic of the UR5. For this the transforamtion matrix need to be created. The transformation matrix does show the position of the robotic system based of the position from the previous joint. Fot this the Denavit-Hartenberg Parameters can be calculated like described in,
 
-```math
+$$
    ^{n-1}T_n = Trans_{z_{n-1}}(d_n) \cdot Rot_{z_{n-1}}(\theta_n) \cdot Trans_{z_{n-1}}(a_n) \cdot Rot_{z_{n-1}}(\alpha_n)
-```
+$$
+
 where the translation Matrix can be described with,
 
-```math
+$$
 Trans_{z_{n-1}}(d_n) = 
 \begin{bmatrix}
    1 & 0 & 0 & 0 \\
@@ -151,11 +152,11 @@ Trans_{z_{n-1}}(d_n) =
    0 & 0 & 1 & 0 \\
    0 & 0 & 0 & 1
 \end{bmatrix}
-```
+$$
 
 and the rotation Matrix can be described with,
 
-```math
+$$
 Rot_{z_{n-1}}(\theta_n) = 
 \begin{bmatrix}
    \cos(\theta_n) & -\sin(\theta_n) & 0 & 0 \\
@@ -169,10 +170,11 @@ Rot_{z_{n-1}}(\theta_n) =
    0 & \sin(\alpha_n) & \cos(\alpha_n) & 0 \\
    0 & 0 & 0 & 1
 \end{bmatrix}
-```
+$$
+
 The final transformation Matrix between joint $n$ and joint $n-1$ can be defined as followed, 
 
-```math
+$$
    ^{n-1}T_n = 
    \begin{bmatrix}
       \cos(\theta_n) & -\sin(\theta_n)\cos{\alpha_n} & \sin{\theta_n}\sin{\alpha_n} & a_n\cos{\theta_n} \\
@@ -180,11 +182,11 @@ The final transformation Matrix between joint $n$ and joint $n-1$ can be defined
       0 & \sin{\alpha_n} & \cos{\alpha_n} & d_n \\
       0 & 0 & 0 & 1
    \end{bmatrix}
-```
+$$
 
 The final Denavit-Hartenberg transformation Matrix is a 4x4 Matrix and consists of one part that is realted to the rotation ( $R_n^{n-1}$ ), the displacement ( $D_n^{n-1}$ ) and the perspective ( $1$ ).
 
-```math
+$$
 ^{n-1}T_n = 
 \left[
 \begin{array}{c c c | c}
@@ -194,13 +196,13 @@ The final Denavit-Hartenberg transformation Matrix is a 4x4 Matrix and consists 
    0 & 0 & 0 & 1  
 \end{array}
 \right]
-```
+$$
 
 To be able to calculate the psotion of the end effector the complete chain of joints needs to be calulated, fot this the following equation is used.
 
-```math
+$$
    ^0T_6 = ^0T_1 \cdot ^1T_2 \cdot ^2T_3 \cdot ^3T_4 \cdot ^4T_5 \cdot ^5T_6 
-```
+$$
 
 The complete Matrix can be calculated via software and is not calculated manually. To be able to get the position of the end effector only the values of $D_6^0$ need to be calculated.
 
@@ -218,7 +220,7 @@ The transformation matrix from the forward kinematic, can be used to calculate t
    
 where:
 
-```math
+$$
    M_1 = 
    \begin{bmatrix}
    0 \\
@@ -239,31 +241,29 @@ where:
    0 & 1 & 0\\
    0 & 0 & 1
    \end{bmatrix}
-```
+$$
 
 To be able to calculate the jacobian of the UR5 Robot, six revolute joints are used and can be specified as follows,
 
-```math
-   \begin{bmatrix}
-      \dot{x} \\
-      \dot{y} \\
-      \dot{z}
-   \end{bmatrix}
-   = 
-   \begin{bmatrix}
-      R_0^0\cdot M_1 \times (D_6^0-D_0^0) & R_1^0\cdot M_1 \times (D_6^0-D_1^0) & R_2^0\cdot M_1 \times (D_6^0-D_2^0) & R_3^0\cdot M_1 \times (D_6^0-D_3^0) & R_4^0\cdot M_1 \times (D_6^0-D_4^0) & R_5^0\cdot M_1 \times (D_6^0-D_5^0)\\
-      M_1 & M_1 & M_1 & M_1 & M_1 & M_1
-   \end{bmatrix}
-   \cdot
-   \begin{bmatrix}
-      \dot{\theta_1} \\
-      \dot{\theta_2} \\
-      \dot{\theta_3} \\
-      \dot{\theta_4} \\
-      \dot{\theta_5} \\
-      \dot{\theta_6}
-   \end{bmatrix}
-```
+$$
+\begin{bmatrix}
+\dot{x} \\
+\dot{y} \\
+\dot{z}
+\end{bmatrix}=\begin{bmatrix}
+R_0^0\cdot M_1 \times (D_6^0-D_0^0) & R_1^0\cdot M_1 \times (D_6^0-D_1^0) & R_2^0\cdot M_1 \times (D_6^0-D_2^0) & R_3^0\cdot M_1 \times (D_6^0-D_3^0) & R_4^0\cdot M_1 \times (D_6^0-D_4^0) & R_5^0\cdot M_1 \times (D_6^0-D_5^0)\\
+M_1 & M_1 & M_1 & M_1 & M_1 & M_1
+\end{bmatrix}
+\cdot
+\begin{bmatrix}
+\dot{\theta_1} \\
+\dot{\theta_2} \\
+\dot{\theta_3} \\
+\dot{\theta_4} \\
+\dot{\theta_5} \\
+\dot{\theta_6}
+\end{bmatrix}
+$$
 
 The orientation of the jacobian matrix can be ignored, because only the velocities in x,y and z direction are used in the forward kineamtic and can be used to calculate the inverse kinematik with the IK solver algorithm as shown in: [https://en.wikipedia.org/wiki/Inverse_kinematics](https://en.wikipedia.org/wiki/Inverse_kinematics)
 
