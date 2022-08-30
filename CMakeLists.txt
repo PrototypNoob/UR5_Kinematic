@@ -15,5 +15,10 @@ add_executable (inverse_test
     example/inverse_test.cpp
 )
 
+add_executable (auto_test
+    example/auto_test.cpp
+)
+
 target_link_libraries (forward_test kinematic Eigen3::Eigen)
 target_link_libraries (inverse_test kinematic Eigen3::Eigen)
+target_link_libraries (auto_test kinematic Eigen3::Eigen)
